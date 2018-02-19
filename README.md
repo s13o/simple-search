@@ -25,4 +25,27 @@ Simplest static configuration could be used (no service discovery, replicas, bal
 
 ## implementation details
 
-*TBD*
+- [index-api](./index-api/pom.xml) store base interfaces. Documentation addded to JavDoc
+- [index-simple](./index-simple/pom.xml) store simple implementation with in-memory storing of Documents
+- [server](./server/pom.xml) is under construction. It should be a Spring Boot Rest Application with simple React.JS client
+
+ ## compilation & tests
+To compile and run test, pls, run in a command line at root folder of the project 
+(Maven & JDK8 are required to be installed before)
+ ``
+ mvn clean install
+ ``
+
+[BDD](https://cucumber.io/) Tests are:
+
+ - [SimpleTokFactoryTest](./simple-search/index-simple/src/test/resources/SimpleTokFactoryTest.feature):
+ To test basic functions of "TokenFactory" & "Tokenizer" (how to split big Document on set of Tokens) 
+ - [SimpleVocabularyTest](./simple-search/index-simple/src/test/resources/SimpleVocabularyTest.feature):
+ To test Vocabulary - how it store links between Tockens and Documents
+ - [SimpleIndexTest](./simple-search/index-simple/src/test/resources/SimpleIndexTest.feature): 
+ Basically a real test of the index. You can easily play with the feature file and run the test again
+ 
+ 
+ The ::SimpleIndexTest:: is enough to check how the Index works even without test GIU application. 
+ It is a kind of CLI-test but some more comfortable as for me because it is a "played scenario"
+ and you need the only simple text editor to modify test data and repeat the test again.

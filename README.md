@@ -38,11 +38,11 @@ To compile and run test, pls, run in a command line at root folder of the projec
 
 [BDD](https://cucumber.io/) Tests are:
 
- - [SimpleTokFactoryTest](./simple-search/index-simple/src/test/resources/SimpleTokFactoryTest.feature):
+ - [SimpleTokFactoryTest](./index-simple/src/test/resources/SimpleTokFactoryTest.feature):
  To test basic functions of "TokenFactory" & "Tokenizer" (how to split big Document on set of Tokens) 
- - [SimpleVocabularyTest](./simple-search/index-simple/src/test/resources/SimpleVocabularyTest.feature):
+ - [SimpleVocabularyTest](./index-simple/src/test/resources/SimpleVocabularyTest.feature):
  To test Vocabulary - how it store links between Tockens and Documents
- - [SimpleIndexTest](./simple-search/index-simple/src/test/resources/SimpleIndexTest.feature): 
+ - [SimpleIndexTest](./index-simple/src/test/resources/SimpleIndexTest.feature): 
  Basically a real test of the index. You can easily play with the feature file and run the test again
  
  

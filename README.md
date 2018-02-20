@@ -6,7 +6,7 @@ A kind of test assignment with design goals:
 
 ## requirements
 
-Your service should work with small documents where each document contains a series of tokens (words). 
+The service should work with small documents where each document contains a series of tokens (words). 
 To keep things simple document can be represented as String.
  
 The usage model of service:
@@ -14,60 +14,65 @@ The usage model of service:
 - Get document by key 
 - Search on a string of tokens to return keys of all documents that contain all tokens in the set
 
-For index persistence you can store documents in server's memory.
+For index persistence we can store documents in server's memory.
  
 To keep things simple we can assume that there will be no overwrites of a key with a new document.
 
-You should not use existing tools like Lucene based solution, Sphinx or similar.
+We should not use existing tools like Lucene based solution, Sphinx or similar.
 
 Simplest static configuration could be used (no service discovery, replicas, balancing etc.).
 
 
-## implementation details
+## project structure
 
-- [index-api](./index-api/pom.xml) store base interfaces. Documentation addded to JavDoc
-- [index-simple](./index-simple/pom.xml) store simple implementation with in-memory storing of Documents
-- [server](./server/pom.xml) is under construction. It should be a Spring Boot Rest Application with simple React.JS client
+The test assignment is implemented as Java Maven project with submodules:
+
+- [index-api](./index-api/pom.xml) for base interfaces. Documentation about them is added to JavaDoc
+- [index-simple](./index-simple/pom.xml) for simplest (as for me) implementation with in-memory Documents storage 
+- [server](./server/pom.xml) is not finally finished yet. It is a Spring Boot REST Server with simple React.JS client
 
  ## compilation & tests
-To compile and run test, pls, run in a command line at root folder of the project 
-(Maven & JDK-8 are required to be installed before)
+ 
+To compile and run tests, please, start a command line at root folder of the project 
+(Maven & JDK-8 are required to be installed before) and run:
  ``
  mvn clean install
  ``
  
-*NB* : In case you are behind a firewall, please, be sure that your `~/.m2/settings.xml` of maven has
-correct [section for the proxy](http://maven.apache.org/guides/mini/guide-proxies.html). This settings
+*NB* : In case you are behind a firewall, please, be sure that your maven settings file `~/.m2/settings.xml`  has
+correct [section for proxy](http://maven.apache.org/guides/mini/guide-proxies.html). Such settings
 are needed for correct work of NPM managed by [frontend-maven-plugin](https://github.com/eirslett/frontend-maven-plugin)
  
 
-[BDD](https://cucumber.io/) Tests are:
+[BDD](https://cucumber.io/) Tests of the project are:
 
  - [SimpleTokFactoryTest](./index-simple/src/test/resources/SimpleTokFactoryTest.feature):
  To test basic functions of "TokenFactory" & "Tokenizer" (how to split big Document on set of Tokens) 
  - [SimpleVocabularyTest](./index-simple/src/test/resources/SimpleVocabularyTest.feature):
- To test Vocabulary - how it store links between Tockens and Documents
+ To test Vocabulary - how it store and manage links between Tokens and Documents
  - [SimpleIndexTest](./index-simple/src/test/resources/SimpleIndexTest.feature): 
- Basically a real test of the index. You can easily play with the feature file and run the test again
+ Basically it is a real test of the Index. You can easily play with the feature file and run the test again
+ with another test data, it could be funny.
  
  
- The ::SimpleIndexTest:: is enough to check how the Index works even without test GIU application. 
+ The ::SimpleIndexTest:: is enough to check how the Index works even without any GIU application. 
  It is a kind of CLI-test but some more comfortable as for me because it is a "played scenario"
  and you need the only simple text editor to modify test data and repeat the test again.
 
 
 ## starting
 
-There is actually a Spring Boot application in (server)[server] module of the project.
-In case you do not use IDE I can advise a simple way to start it from command line, there is: 
+Search Server is actually a Spring Boot Application in [server](server) module of the project.
+In case you do not use IDE for code review and running of the application I can advise a simple way to start it 
+from a command line, it is: 
 - open a command line
-- navigate to a folder with checkouted sources of the project
+- navigate with it to a folder with sources of the project
 - run maven build by the command  `mvn clean install`. It will take a time because some maven dependencies
-could be downloaded and (Node.JS)[https://nodejs.org/] && *(npm)[https://www.npmjs.com/] will be installed 
-as well to `${user.home}` folder.  I suppose you have permissions to download and install software locally  
+could be downloaded and [Node.JS](https://nodejs.org/) && *[npm](https://www.npmjs.com/) will also be installed 
+to `${user.home}` folder.  I suppose you have permissions to download and install software locally  
 (because I have not on my workstation, for example). Otherwise maven build will fail.
-- On success of build, please, navigate to subfolder (server)[server] and run `mvn spring-boot:run`
-- The Application will be started in port 8080 and you will have a logs like this
+- On success of build, please, navigate to subfolder [server](server) and run `mvn spring-boot:run`
+- The Search Server Spring Boot Application will be started on port 8080 and you will see starting logs like this
 ~~~~
 ....
 [INFO] Scanning for projects...
@@ -262,10 +267,10 @@ on || application/json]}" onto public java.lang.Object org.springframework.boot.
 
 There are two simple web interfaces designed for testing of the Search Server
 
-- First is a React application, but it is not actually ready yet. It will be just on a root url of the 
+- First is a React application, (but actually it is not ready yet, sorry). It will be mapped to the "root url" of the 
 server [http://localhost:8080/](http://localhost:8080/)
 - Second is a [API help](http://localhost:8080/help) page. But it contains small set of java scripts and form controls 
-to test the API just from page
+to test the API just from the page
 
 The server will be started with 4 pre-loaded document, the same with used by DBB tests. 
 There are some screenshots below.

@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 /**
  * Central Service Interface of the project.
  * It declare only methods required by the test assignment
+ *
  * @author {@link "mailto:roman.solodovnichenko@gmail.com" "romanso"}
  * @since 2/18/2018
  */
@@ -19,7 +20,9 @@ public interface Index {
      */
     Stream<Document> get(@NotNull String key);
 
-    Stream<Document> findAny(@NotNull String content) throws IllegalContentException;
+    Stream<Document> findAny(@NotNull String content) throws WrongParametersException;
 
-    Stream<Document> findAll(@NotNull String content) throws IllegalContentException;
+    Stream<Document> findAll(@NotNull String content) throws WrongParametersException;
+
+    Stream<Document> getAll() throws WrongParametersException;
 }

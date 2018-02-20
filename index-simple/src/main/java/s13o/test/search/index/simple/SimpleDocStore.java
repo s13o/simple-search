@@ -1,6 +1,10 @@
 package s13o.test.search.index.simple;
 
-import s13o.test.search.index.api.*;
+import org.springframework.stereotype.Component;
+import s13o.test.search.index.api.AlreadyExistsException;
+import s13o.test.search.index.api.DocRef;
+import s13o.test.search.index.api.DocStore;
+import s13o.test.search.index.api.Document;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -17,6 +21,7 @@ import java.util.stream.Stream;
  * @author {@link "mailto:roman.solodovnichenko@gmail.com" "romanso"}
  * @since 2/18/2018
  */
+@Component
 public class SimpleDocStore implements DocStore {
 
     private final ReadWriteLock lock = new ReentrantReadWriteLock();
@@ -25,7 +30,7 @@ public class SimpleDocStore implements DocStore {
     private List<Document> storage = new LinkedList<>();
 
     @Override
-    public DocRef add(@NotNull Document document) throws AlreadyExistsException{
+    public DocRef add(@NotNull Document document) throws AlreadyExistsException {
         Integer index = key2index.get(document.getKeyword());
         if (index != null)
             throw new AlreadyExistsException(document.getKeyword());

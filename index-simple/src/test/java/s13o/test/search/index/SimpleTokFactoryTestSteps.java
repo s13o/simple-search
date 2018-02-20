@@ -9,7 +9,6 @@ import s13o.test.search.index.api.Document;
 import s13o.test.search.index.api.TokFactory;
 import s13o.test.search.index.api.Token;
 import s13o.test.search.index.simple.PlainTextDocument;
-import s13o.test.search.index.simple.SimpleConfig;
 
 import java.util.List;
 import java.util.stream.Collectors;

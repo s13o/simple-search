@@ -5,6 +5,7 @@ import java.util.Date;
 /**
  * Some kind of link between "external id" and "internal id".
  * Like a complex key-object (reference) of {@link Document} at {@link DocStore}
+ *
  * @author {@link "mailto:roman.solodovnichenko@gmail.com" "romanso"}
  * @since 2/18/2018
  */

@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 
 /**
  * The object is designed to store sorted list of offsets for specific "word\token" in a single document
+ *
  * @author {@link "mailto:roman.solodovnichenko@gmail.com" "romanso"}
  * @since 2/18/2018
  */
@@ -28,15 +29,15 @@ public class TokenOffsets {
         this.offsets = new ConcurrentLinkedDeque<>();
     }
 
-    public void register(Long offset){
+    public void register(Long offset) {
         offsets.add(offset);
     }
 
-    public int frequency(){
+    public int frequency() {
         return offsets.size();
     }
 
-    public Stream<Long> offsetStream(){
+    public Stream<Long> offsetStream() {
         return offsets.stream();
     }
 

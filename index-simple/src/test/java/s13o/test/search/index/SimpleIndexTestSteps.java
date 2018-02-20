@@ -4,11 +4,9 @@ import cucumber.api.java.en.Given;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import s13o.test.search.index.api.DocRef;
 import s13o.test.search.index.api.Document;
 import s13o.test.search.index.api.Index;
 import s13o.test.search.index.simple.PlainTextDocument;
-import s13o.test.search.index.simple.SimpleConfig;
 
 import java.util.List;
 import java.util.stream.Collectors;

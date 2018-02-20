@@ -15,7 +15,7 @@
 
 	<packaging>jar</packaging>
 
-	<name>index simple implementation</name>
+	<name>index simple</name>
 	<description>Simple Search Index implementation</description>
 
 	<dependencies>

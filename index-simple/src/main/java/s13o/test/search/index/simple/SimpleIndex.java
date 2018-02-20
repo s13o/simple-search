@@ -3,7 +3,6 @@ package s13o.test.search.index.simple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import s13o.test.search.index.api.*;
-import s13o.test.search.index.api.Vocabulary;
 
 import javax.validation.constraints.NotNull;
 import java.util.*;
@@ -30,7 +29,6 @@ public class SimpleIndex implements Index {
         this.factory = factory;
     }
 
-
     @Override
     public Integer add(@NotNull Document doc) throws IllegalContentException, AlreadyExistsException {
         return vocabulary.add(storage.add(doc), factory.create(doc).tokensOf(doc));
@@ -42,48 +40,68 @@ public class SimpleIndex implements Index {
     }
 
     @Override
-    public Stream<Document> findAny(@NotNull String content) throws IllegalContentException {
+    public Stream<Document> findAny(@NotNull String content) throws WrongParametersException {
         final Document doc = new PlainTextDocument("findAny", content);
-        final List<Document> refs = factory.create(doc).tokensOf(doc)
-                .parallel().collect(
-                LinkedList::new,
-                (BiConsumer<List<Document>, Token>) (list, token1) ->
-                        list.addAll(
-                                vocabulary.get(token1.getToken())
-                                        .map((id) -> storage.get(id.getId()))
-                                        .filter(Optional::isPresent)
-                                        .map(Optional::get).collect(Collectors.toList())),
-                List::addAll);
-        return refs.stream();
+        try {
+            return factory.create(doc).tokensOf(doc)
+                    .parallel().map(this::listRefByToken)
+                    .collect(ConcurrentHashMap::new,
+                            (BiConsumer<Map<Integer, DocRef>, List<DocRef>>)
+                                    (map, list) -> list.forEach((r) -> map.put(r.getId(), r)),
+                            Map::putAll)
+                    .entrySet().stream().map(Map.Entry::getValue)
+                    .map((ref) -> storage.get(ref.getId()))
+                    .filter(Optional::isPresent)
+                    .map(Optional::get);
+        } catch (IllegalContentException e) {
+            throw new WrongParametersException(content);
+        }
+    }
+
+    private List<DocRef> listRefByToken(Token token) {
+        return vocabulary.getRef(token.getToken()).collect(Collectors.toList());
     }
 
     @Override
-    public Stream<Document> findAll(@NotNull String content) throws IllegalContentException {
+    public Stream<Document> findAll(@NotNull String content) throws WrongParametersException {
         final Document doc = new PlainTextDocument("findAll", content);
-        final Stream<Token> token = factory.create(doc).tokensOf(doc);
-        final Map<String, Set<Integer>> map = token.parallel().collect(
-                ConcurrentHashMap::new,
-                (BiConsumer<Map<String, Set<Integer>>, Token>) (map1, token1) ->
-                        map1.computeIfAbsent(token1.getToken(), (k) -> new HashSet<>())
-                                .addAll(
-                                        vocabulary.get(token1.getToken()).map(DocRef::getId)
-                                                .collect(Collectors.toList())),
-                (m1, m2) -> m2.forEach((key, value) -> {
-                    m1.computeIfAbsent(key, (k) -> new HashSet<>()).addAll(value);
-                })
-        );
-        final Optional<Set<Integer>> set = map.values().stream().reduce(
-                BinaryOperator.minBy(
-                        (o1, o2) -> o1.containsAll(o2)?1:-1
-                )
-        );
-        if(!set.isPresent())
-            return Stream.empty();
+        try {
+            final Optional<Set<Integer>> set =  factory.create(doc).tokensOf(doc)
+                    .parallel()
+                    .collect(ConcurrentHashMap::new,
+                            (BiConsumer<Map<String, Set<Integer>>, Token>)
+                                (map, token) -> map.computeIfAbsent(
+                                        token.getToken(), (k) -> new HashSet<>()).addAll(listIdByToken(token)),
+                                (map1, map2) -> map2.forEach((key, value) -> {
+                                    map1.computeIfAbsent(key, (k) -> new HashSet<>()).addAll(value);
+                                    }
+                                )
+            ).values().stream().reduce(
+                    BinaryOperator.minBy(
+                            (o1, o2) -> o1.containsAll(o2) ? o2.containsAll(o1) ? 0 : 1 : -1
+                    )
+            );
+            if(!set.isPresent())
+                return Stream.empty();
 
-        return set.get().stream()
-                .map((id) -> storage.get(id))
-                .filter(Optional::isPresent)
-                .map(Optional::get);
+            return set.get().stream()
+                    .map((id) -> storage.get(id))
+                    .filter(Optional::isPresent)
+                    .map(Optional::get);
+        } catch (IllegalContentException e) {
+            throw new WrongParametersException(content);
+        }
     }
 
+    private List<Integer> listIdByToken(Token token) {
+        return vocabulary.getRef(token.getToken())
+                .map(DocRef::getId)
+                .distinct().sorted()
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Stream<Document> getAll() throws WrongParametersException {
+        return findAny(vocabulary.allTokens().collect(Collectors.joining(" ", "", "")));
+    }
 }

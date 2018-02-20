@@ -9,11 +9,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 
 @Controller
-public class HomeController {
+public class WebController {
 
-	@RequestMapping(value = "/")
-	public String index() {
-		return "index";
-	}
+    @RequestMapping(value = "/")
+    public String index() {
+        return "index";
+    }
+
+    @RequestMapping(value = "/help")
+    public String help() {
+        return "help";
+    }
 
 }

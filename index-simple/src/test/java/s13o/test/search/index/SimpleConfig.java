@@ -1,4 +1,4 @@
-package s13o.test.search.index.simple;
+package s13o.test.search.index;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -7,6 +7,10 @@ import s13o.test.search.index.api.DocStore;
 import s13o.test.search.index.api.Index;
 import s13o.test.search.index.api.TokFactory;
 import s13o.test.search.index.api.Vocabulary;
+import s13o.test.search.index.simple.SimpleDocStore;
+import s13o.test.search.index.simple.SimpleIndex;
+import s13o.test.search.index.simple.SimpleTokFactory;
+import s13o.test.search.index.simple.SimpleVocabulary;
 
 /**
  * @author {@link "mailto:roman.solodovnichenko@gmail.com" "romanso"}

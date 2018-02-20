@@ -1,6 +1,6 @@
 package s13o.test.search.index.simple;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import s13o.test.search.index.api.Document;
 import s13o.test.search.index.api.TokFactory;
@@ -16,7 +16,7 @@ import java.util.stream.StreamSupport;
  * @author {@link "mailto:roman.solodovnichenko@gmail.com" "romanso"}
  * @since 2/18/2018
  */
-@Service
+@Component
 public class SimpleTokFactory implements TokFactory {
     /**
      * Here we should check content type of the Document and choose most appropriate Tokenizer.

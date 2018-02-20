@@ -9,7 +9,6 @@ import org.springframework.test.context.ContextConfiguration;
 import s13o.test.search.index.api.DocRef;
 import s13o.test.search.index.api.Token;
 import s13o.test.search.index.api.Vocabulary;
-import s13o.test.search.index.simple.SimpleConfig;
 import s13o.test.search.index.simple.SimpleDocRef;
 
 import java.util.List;
@@ -39,7 +38,7 @@ public class SimpleVocabularyTestSteps {
 
     @Then("^with token \"(.*)\" we have found such documents$")
     public void then(String token, List<Integer> expected){
-        List<Integer> actual =  vocabulary.get(token).map(DocRef::getId).sorted().collect(Collectors.toList());
+        List<Integer> actual =  vocabulary.getRef(token).map(DocRef::getId).sorted().collect(Collectors.toList());
         Assert.assertEquals(expected, actual);
     }
 

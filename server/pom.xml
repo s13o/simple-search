@@ -15,8 +15,8 @@
 
     <packaging>jar</packaging>
 
-    <name>search</name>
-    <description>Simple Search Index REST Server</description>
+    <name>index server</name>
+    <description>Simple Search Index Server</description>
 
     <dependencies>
         <dependency>
@@ -30,7 +30,11 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-rest</artifactId>
+            <artifactId>spring-boot-starter-jersey</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -39,11 +43,6 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -62,9 +61,15 @@
             <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
-                <version>1.2</version>
+                <version>1.6</version>
                 <configuration>
-                    <installDirectory>target</installDirectory>
+                    <!-- optional: where to download node from. Defaults to https://nodejs.org/dist/ -->
+                    <nodeDownloadRoot>http://nodejs.org/dist/</nodeDownloadRoot>
+                    <!-- optional: where to download npm from. Defaults to https://registry.npmjs.org/npm/-/ -->
+                    <npmDownloadRoot>http://registry.npmjs.org/npm/-/</npmDownloadRoot>
+                    <!--<installDirectory>target</installDirectory>-->
+                    <installDirectory>${user.home}</installDirectory>
+                    <npmInheritsProxyConfigFromMaven>true</npmInheritsProxyConfigFromMaven>
                 </configuration>
                 <executions>
                     <execution>

@@ -7,10 +7,11 @@ import s13o.test.search.index.api.TokenOffsets;
 import s13o.test.search.index.api.Vocabulary;
 
 import javax.validation.constraints.NotNull;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BiConsumer;
 import java.util.stream.Stream;
 
 /**
@@ -27,7 +28,7 @@ public class SimpleVocabulary implements Vocabulary {
     @Override
     public Integer add(@NotNull DocRef ref, @NotNull Stream<Token> stream) {
         stream.forEach(
-                (token) ->{
+                (token) -> {
                     map.computeIfAbsent(token.getToken(), (f) -> new ConcurrentHashMap<>())
                             .computeIfAbsent(ref, TokenOffsets::new).register(token.getOffset());
                 }
@@ -36,12 +37,20 @@ public class SimpleVocabulary implements Vocabulary {
     }
 
     /**
-     * Return ID of documents with the "token"
+     * Return Unique ID of documents with the "token"
      */
     @Override
-    public Stream<DocRef> get(@NotNull String token){
+    public Stream<DocRef> getRef(@NotNull String token) {
         return map.getOrDefault(token, Collections.emptyMap())
-                .entrySet().stream().map(Map.Entry::getKey);
+                .entrySet().stream().map(Map.Entry::getKey)
+                .collect(HashMap::new,
+                        (BiConsumer<Map<Integer, DocRef>, DocRef>)(map, ref)-> map.put(ref.getId(), ref),
+                        Map::putAll)
+                .entrySet().stream().map(Map.Entry::getValue);
     }
 
+    @Override
+    public Stream<String> allTokens() {
+        return map.keySet().stream();
+    }
 }

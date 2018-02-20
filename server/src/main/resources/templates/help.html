@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8"/>
+    <title>Simple Search REST API help</title>
+    <link rel="stylesheet" href="/main.css" />
+</head>
+<body>
+[ <a href="/">Home</a> ]|[ API Help ]
+<p/>
+    <table>
+        <tr>
+            <th>Get all</th>
+            <td>GET: <a href="/api/all">/api/all</a></td>
+        </tr>
+        <tr>
+            <th>Get by keyword</th>
+            <td>GET: <form method="get" action="/api/get/">
+                        /api/get/{keyword:<input id="geti" type="text" title="keyword"/>}
+                <input type="submit" hidden="true" onclick="setAction(this, 'geti')"/></form></td>
+        </tr>
+        <tr>
+            <th>Search with all tokens from criteria</th>
+            <td>GET: <form method="get" action="/api/and/">
+                /api/and/{criteria:<input id="geta" type="text" title="criteria"/>}
+                <input type="submit" hidden="true" onclick="setAction(this, 'geta')"/></form></td>
+        </tr>
+        <tr>
+            <th>Search with any tokens from criteria</th>
+            <td>GET: <form method="get" action="/api/or/">
+                /api/and/{criteria:<input id="geto" type="text" title="criteria"/>}
+                <input type="submit" hidden="true" onclick="setAction(this, 'geto')"/></form></td>
+        </tr>
+        <tr>
+            <th>Add new Document</th>
+            <td>POST: <form method="post" action="/api/add" >
+                /api/add
+                keyword: <input type="text" name="keyword" title="keyword"/>,
+                content: <input type="text" name="content" title="content"/>
+                <input type="submit" value="Submit"/></form>
+            </td>
+        </tr>
+    </table>
+    <script>
+        function setAction(element, input){
+            i = document.getElementById(input);
+            element.form.action = element.form.action + i.value;
+            element.form.submit();
+        }
+    </script>
+
+</body>
+</html>

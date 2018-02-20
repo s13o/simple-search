@@ -13,7 +13,7 @@ class App extends React.Component {
 
     componentDidMount() {
         client({method: 'GET', path: '/api/all'}).done(response => {
-            this.setState({docs: response.entity._embedded.docs});
+            this.setState({docs: response.entity});
         });
     }
 
@@ -26,7 +26,7 @@ class App extends React.Component {
 
 class DocList extends React.Component{
     render() {
-        var docs = this.props.documents.map(doc =>
+        var docs = this.props.docs.map(doc =>
             <Doc key={doc.keyword} doc={doc}/>
     );
         return (

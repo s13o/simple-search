@@ -68,10 +68,10 @@ from a command line, it is:
 - open a command line
 - navigate with it to a folder with sources of the project
 - run maven build by the command  `mvn clean install`. It will take a time because some maven dependencies
-could be downloaded and [Node.JS](https://nodejs.org/) && *[npm](https://www.npmjs.com/) will also be installed 
-to `${user.home}` folder.  I suppose you have permissions to download and install software locally  
-(because I have not on my workstation, for example). Otherwise maven build will fail.
-- On success of build, please, navigate to subfolder [server](server) and run `mvn spring-boot:run`
+could be downloaded and [Node.JS](https://nodejs.org/) && [npm](https://www.npmjs.com/) will also be installed 
+to `${user.home}` folder.  I suppose you have permissions to download and install software locally (but I have not 
+on my workstation, for example, and direct internet connection missed as well. It cause a lot of issues for me). Otherwise maven build will fail.
+- On success of build, please, navigate to sub-folder [server](server) and run `mvn spring-boot:run`
 - The Search Server Spring Boot Application will be started on port 8080 and you will see starting logs like this
 ~~~~
 ....

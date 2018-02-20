@@ -8,14 +8,14 @@ package s13o.test.search.index.api;
  */
 public interface Document {
     /**
-     * I think it is not so goot to store the "keyword" (kind of external ID) with Document - it should be in
-     * {@link DocRef}. We can assume that the "keyword" here is an original raw data but in {@link DocRef}
-     * we storing some "extracted\normalized keywords(s)", they are equals in current simple implementation.
+     * I think it is not so goot to store the "key" (kind of external ID) with Document - it should be in
+     * {@link DocRef}. We can assume that the "key" here is an original raw data but in {@link DocRef}
+     * we storing some "extracted\normalized key(s)", they are equals in current simple implementation.
      * Actually when you will check how the method is used - it is it.
      *
-     * @return Keyword of the Document (some kind of unique external ID, like an URL or GUID)
+     * @return Key of the Document (some kind of unique external ID, like an URL or GUID)
      */
-    String getKeyword();
+    String getKey();
 
     /**
      * I think it could be better to use some {@link java.io.InputStream} but the {@link CharSequence}

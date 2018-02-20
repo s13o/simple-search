@@ -7,7 +7,7 @@ Feature: Simple Index Test
 
   Scenario: check all documents are always found
     Given set of documents
-      | keyword   | content             |
+      | key       | content             |
       | letter1   | 1 the letter 1      |
       | letter2   | 2 the letter 2      |
       | letter3   | 3 the letter 3      |
@@ -22,7 +22,7 @@ Feature: Simple Index Test
 
   Scenario: check some documents are found but another don't
     Given set of documents
-      | keyword | content                                |
+      | key     | content                                 |
       | mail1   | How many cookies could a good cook cook |
       | mail2   | If a good cook could cook cookies?      |
       | mail3   | A good cook could cook as many cookies  |

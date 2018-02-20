@@ -18,16 +18,15 @@ public interface DocStore {
      * @param document
      * @return reference on Document from the DocStore
      * @throws AlreadyExistsException
-     * @throws IllegalContentException
      */
     DocRef add(@NotNull Document document) throws AlreadyExistsException;
 
     /**
-     * Find a document(s) by keyword
+     * Find a document(s) by key
      *
-     * @param keyword
+     * @param key
      */
-    Stream<Document> get(@NotNull String keyword);
+    Stream<Document> get(@NotNull String key);
 
     /**
      * Find a document by registration ID

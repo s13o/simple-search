@@ -27,13 +27,13 @@ class App extends React.Component {
 class DocList extends React.Component{
     render() {
         var docs = this.props.docs.map(doc =>
-            <Doc key={doc.keyword} doc={doc}/>
+            <Doc key={doc.key} doc={doc}/>
     );
         return (
             <table>
                 <tbody>
                 <tr>
-                    <th>Keyword</th>
+                    <th>Key</th>
                     <th>Content</th>
                 </tr>
                 {docs}
@@ -47,7 +47,7 @@ class Doc extends React.Component{
     render() {
         return (
             <tr>
-                <td>{this.props.doc.keyword}</td>
+                <td>{this.props.doc.key}</td>
                 <td>{this.props.doc.content}</td>
             </tr>
         )

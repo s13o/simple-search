@@ -13,6 +13,6 @@ import s13o.test.search.index.api.Document;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Doc implements Document {
-    private String keyword;
+    private String key;
     private String content;
 }

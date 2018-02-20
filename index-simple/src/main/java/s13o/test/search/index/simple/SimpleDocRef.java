@@ -13,13 +13,13 @@ import java.util.Date;
  */
 @Data
 public class SimpleDocRef implements DocRef {
-    final String keyword;
+    final String key;
     final int id;
     final Date registeredAt;
 
-    public SimpleDocRef(@NotNull String keyword, @Positive int id, Date registeredAt) {
+    public SimpleDocRef(@NotNull String key, @Positive int id, Date registeredAt) {
         this.registeredAt = registeredAt != null ? registeredAt : new Date();
-        this.keyword = keyword;
+        this.key = key;
         this.id = id;
     }
 

@@ -14,7 +14,7 @@ public interface Index {
     Integer add(@NotNull Document doc) throws IllegalContentException, AlreadyExistsException;
 
     /**
-     * @param key it is actually a "keyword", external ID
+     * @param key it is actually a "key", external ID
      * @return Stream of references on {@link Document} but in current implementation (as required) it could be only one
      * Document
      */

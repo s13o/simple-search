@@ -31,14 +31,14 @@ public class SimpleDocStore implements DocStore {
 
     @Override
     public DocRef add(@NotNull Document document) throws AlreadyExistsException {
-        Integer index = key2index.get(document.getKeyword());
+        Integer index = key2index.get(document.getKey());
         if (index != null)
-            throw new AlreadyExistsException(document.getKeyword());
+            throw new AlreadyExistsException(document.getKey());
         lock.writeLock().lock();
         try {
-            final SimpleDocRef ref = new SimpleDocRef(document.getKeyword(), storage.size(), null);
+            final SimpleDocRef ref = new SimpleDocRef(document.getKey(), storage.size(), null);
             storage.add(document);
-            key2index.put(document.getKeyword(), ref.getId());
+            key2index.put(document.getKey(), ref.getId());
             return ref;
         } finally {
             lock.writeLock().unlock();
@@ -46,8 +46,8 @@ public class SimpleDocStore implements DocStore {
     }
 
     @Override
-    public Stream<Document> get(@NotNull String keyword) {
-        Integer index = key2index.get(keyword);
+    public Stream<Document> get(@NotNull String key) {
+        Integer index = key2index.get(key);
         if (index == null)
             return Stream.empty();
         return get(index).map(Stream::of).orElseGet(Stream::empty);

@@ -9,6 +9,6 @@ import s13o.test.search.index.api.Document;
  */
 @Data
 public class PlainTextDocument implements Document {
-    private final String keyword;
+    private final String key;
     private final String content;
 }

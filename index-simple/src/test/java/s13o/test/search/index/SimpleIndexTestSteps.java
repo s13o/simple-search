@@ -29,13 +29,13 @@ public class SimpleIndexTestSteps {
 
     @Given("^findAny by \"(.*)\" will find$")
     public void then(String searchWords, List<String> expected) throws Exception {
-        final List<String> actual = index.findAny(searchWords).map(Document::getKeyword).sorted().collect(Collectors.toList());
+        final List<String> actual = index.findAny(searchWords).map(Document::getKey).sorted().collect(Collectors.toList());
         Assert.assertEquals(expected, actual);
     }
 
     @Given("^findAll by \"(.*)\" will find$")
     public void and(String searchWords, List<String> expected) throws Exception {
-        final List<String> actual = index.findAll(searchWords).map(Document::getKeyword).sorted().collect(Collectors.toList());
+        final List<String> actual = index.findAll(searchWords).map(Document::getKey).sorted().collect(Collectors.toList());
         Assert.assertEquals(expected, actual);
     }
 

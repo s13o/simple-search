@@ -14,9 +14,9 @@
             <td>GET: <a href="/api/all">/api/all</a></td>
         </tr>
         <tr>
-            <th>Get by keyword</th>
+            <th>Get by key</th>
             <td>GET: <form method="get" action="/api/get/">
-                        /api/get/{keyword:<input id="geti" type="text" title="keyword"/>}
+                        /api/get/{key:<input id="geti" type="text" title="key"/>}
                 <input type="submit" hidden="true" onclick="setAction(this, 'geti')"/></form></td>
         </tr>
         <tr>
@@ -35,7 +35,7 @@
             <th>Add new Document</th>
             <td>POST: <form method="post" action="/api/add" >
                 /api/add
-                keyword: <input type="text" name="keyword" title="keyword"/>,
+                key: <input type="text" name="key" title="key"/>,
                 content: <input type="text" name="content" title="content"/>
                 <input type="submit" value="Submit"/></form>
             </td>

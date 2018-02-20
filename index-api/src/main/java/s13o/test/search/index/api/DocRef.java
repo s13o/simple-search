@@ -14,7 +14,7 @@ public interface DocRef {
     /**
      * @return "external" id of the {@link Document}
      */
-    String getKeyword();
+    String getKey();
 
     /**
      * @return index (internal registered number) of the Document in {@link DocStore}

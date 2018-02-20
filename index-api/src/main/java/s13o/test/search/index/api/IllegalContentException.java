@@ -8,14 +8,14 @@ package s13o.test.search.index.api;
  * @since 2/18/2018
  */
 public class IllegalContentException extends Exception {
-    private final String keyword;
+    private final String key;
 
-    public IllegalContentException(String keyword) {
-        super(String.format("The content of Document with keyword %s is missed or not supported", keyword));
-        this.keyword = keyword;
+    public IllegalContentException(String key) {
+        super(String.format("The content of Document with key %s is missed or not supported", key));
+        this.key = key;
     }
 
-    public String getKeyword() {
-        return keyword;
+    public String getKey() {
+        return key;
     }
 }

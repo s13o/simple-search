@@ -26,16 +26,16 @@ public class Api {
 
     @POST
     @Path("/add")
-    public Doc add(@FormParam("keyword") String keyword, @FormParam("content") String content) throws AlreadyExistsException, IllegalContentException {
-        Doc doc = new Doc(keyword, content);
+    public Doc add(@FormParam("key") String key, @FormParam("content") String content) throws AlreadyExistsException, IllegalContentException {
+        Doc doc = new Doc(key, content);
         index.add(doc);
         return doc;
     }
 
     @GET
-    @Path("/get/{keyword}")
-    public Doc get(@PathParam("keyword") String keyword) {
-        return index.get(keyword).findAny().map(Api::match).get();
+    @Path("/get/{key}")
+    public Doc get(@PathParam("key") String key) {
+        return index.get(key).findAny().map(Api::match).get();
     }
 
     @GET
@@ -57,6 +57,6 @@ public class Api {
     }
 
     private static Doc match(Document d) {
-        return d instanceof Doc ? (Doc) d : new Doc(d.getKeyword(), String.valueOf(d.getContent()));
+        return d instanceof Doc ? (Doc) d : new Doc(d.getKey(), String.valueOf(d.getContent()));
     }
 }
